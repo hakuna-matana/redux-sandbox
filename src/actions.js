@@ -1,3 +1,6 @@
-export const incAction = () => ({type: 'INC'});
-export const decAction = () => ({type: 'DEC'});
-export const rndAction = (payload) => ({type: 'RND', payload});
+export const inc = () => ({type: 'INC'});
+export const dec = () => ({type: 'DEC'});
+export const rnd = () => {
+  const payload = Math.floor(Math.random()*10);
+  return {type: 'RND', payload}
+};
