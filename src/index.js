@@ -1,4 +1,10 @@
+import * as React from 'react';
+import ReactDOM from 'react-dom';
+
 import {createStore, bindActionCreators} from 'redux';
+
+import Counter from './Counter';
+
 import * as actions from "./actions";
 import reducer from "./reducer";
 
@@ -21,14 +27,27 @@ const { dispatch } = store;
 // с помощью dispatch обновляются данные в store
 const {incAction, decAction, rndAction} = bindActionCreators(actions, dispatch);
 
+// inc.addEventListener('click', incAction);
+// dec.addEventListener('click', decAction);
+// rnd.addEventListener('click', () => {
+//   const payload = Math.floor(Math.random()*10);
+//   rndAction(payload)
+// });
+const update = () => {
+  let counter = <Counter
+    dec={decAction}
+    inc={incAction}
+    rnd={() => {
+      const payload = Math.floor(Math.random()*10);
+      rndAction(payload)
+    }}
+    counter={store.getState()}
+  />;
+  ReactDOM.render(counter, document.getElementById('root'))
+};
+update();
 // подписка на изменение состояния, используем для обновления ui
 store.subscribe(() => {
-  counter.innerHTML = store.getState();
-});
-
-inc.addEventListener('click', incAction);
-dec.addEventListener('click', decAction);
-rnd.addEventListener('click', () => {
-  const payload = Math.floor(Math.random()*10);
-  rndAction(payload)
+  // counter.innerHTML = store.getState();
+  update()
 });
